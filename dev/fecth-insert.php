@@ -41,7 +41,7 @@
 
     
     
-    $get_data = callAPI('GET', 'https://gateway.marvel.com:443/v1/public/characters?orderBy=name&limit=100&offset=0&ts='.$ts.'&apikey='.$apiKey.'&hash='.$hash.'', false);
+    $get_data = callAPI('GET', 'https://gateway.marvel.com:443/v1/public/characters?orderBy=name&limit=100&offset=1400&ts='.$ts.'&apikey='.$apiKey.'&hash='.$hash.'', false);
     $response = json_decode($get_data, true);
     
     $total = $response['data']['count'];
