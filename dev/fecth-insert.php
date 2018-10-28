@@ -52,9 +52,15 @@
 
         $id = $response['data']['results'][$i]['id'];
         $name = $response['data']['results'][$i]['name'];
+        $name = htmlspecialchars($name, ENT_QUOTES);
         $thumbnail = $response['data']['results'][$i]['thumbnail']['path'].'.'.$response['data']['results'][$i]['thumbnail']['extension'];
 
-        mysqli_query($con,"INSERT INTO characters VALUES($id, '$name', '$thumbnail')");
+        if(mysqli_query($con,"INSERT INTO characters VALUES($id, '$name', '$thumbnail')")){
+            continue;
+        }else{
+            echo $i." ".$id."---".$name."---".$thumbnail."<br>";
+        }
+
     }
 
     echo "done";
