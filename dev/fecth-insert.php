@@ -39,17 +39,24 @@
     $string = $ts.$privateKey.$apiKey;
     $hash = md5($string);
 
-
-
-
-    $get_data = callAPI('GET', 'https://gateway.marvel.com:443/v1/public/characters?orderBy=name&limit=2&offset=0&ts='.$ts.'&apikey='.$apiKey.'&hash='.$hash.'', false);
-    $response = json_decode($get_data, true);
-
     
+    
+    $get_data = callAPI('GET', 'https://gateway.marvel.com:443/v1/public/characters?orderBy=name&limit=100&offset=0&ts='.$ts.'&apikey='.$apiKey.'&hash='.$hash.'', false);
+    $response = json_decode($get_data, true);
+    
+    $total = $response['data']['count'];
+    
+    $con=mysqli_connect("localhost","parth","parth","marvel");
 
-    echo $response['data']['results'][0]['id'];
+    for($i=0; $i<$total; $i++){
 
+        $id = $response['data']['results'][$i]['id'];
+        $name = $response['data']['results'][$i]['name'];
+        $thumbnail = $response['data']['results'][$i]['thumbnail']['path'].'.'.$response['data']['results'][$i]['thumbnail']['extension'];
 
+        mysqli_query($con,"INSERT INTO characters VALUES($id, '$name', '$thumbnail')");
+    }
 
+    echo "done";
 
 ?>
