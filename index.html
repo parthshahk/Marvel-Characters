@@ -107,17 +107,12 @@
         <!-- NAVIGATION ENDS -->
         <div id="app">
 
-
-
             <!-- PAGELODAER -->
             <pre-loader id="pageloader" v-show="state=='loading'"></pre-loader>
             <!-- PAGELOADER ENDS -->
 
-
-
-
-            <!-- LANDING PAGE -->
-            <div v-if="state=='landingPage'" v-cloak>
+            <!-- SEARCH CONTROLS -->
+            <div v-if="state=='landingPage' || state=='searchPage'">
                 <div class="container">
                     <div class="row"></div>
                     <div class="row">
@@ -132,6 +127,13 @@
                         </div>
                     </div>
                     <div class="row"></div>
+                </div>
+            </div>
+            <!-- SEARCH CONTROLS END -->
+
+            <!-- RANDOM RESULTS PAGE -->
+            <div v-if="state=='landingPage'" v-cloak>
+                <div class="container">
                     <div class="row"></div>
                     <div class="row"><div class="col s6 offset-s3 divider"></div></div>
                     <div class="row"></div>
@@ -140,9 +142,9 @@
                     </div>
                 </div>
             </div>
-            <!-- LANDING PAGE ENDS -->
+            <!-- RANDOM RESULTS ENDS -->
 
-            <!-- SEARCH PAGE STARTS -->
+            <!-- SEARCH RESULTS STARTS -->
             <div v-if="state=='searchPage'" v-cloak>
                 <div class="container">
                     <div class="row"></div>
@@ -151,10 +153,7 @@
                     </div>
                 </div>
             </div>
-            <!-- SEARCH PAGE ENDS -->
-
-
-
+            <!-- SEARCH RESULTS ENDS -->
 
             <!-- FOOTER -->
             <div class="container" v-if="state!='loading'" v-cloak>
@@ -193,7 +192,8 @@
                     state: 'loading',
                     random: '',
                     searchData: '',
-                    searchQ: ''
+                    searchQ: '',
+                    randomCount: 20
                 },
 
                 methods: {
@@ -203,20 +203,31 @@
                         this.state = 'loading';
                         var self = this;
 
-                        axios.get('./api/fetch-local.php?type=like&q='+self.searchQ)
-                            .then(function(response){
-                                self.searchData = response.data;
-                                self.random = '';
-                                self.state = 'searchPage';
-                            })
+                        if(self.searchQ == ''){
+
+                            axios.get('./api/fetch-local.php?type=random&q='+self.randomCount)
+                                .then(function (response){
+                                    self.random = response.data;
+                                    self.state = 'landingPage';
+                                })
+
+                        }else{
+
+                            axios.get('./api/fetch-local.php?type=like&q='+self.searchQ)
+                                .then(function(response){
+                                    self.searchData = response.data;
+                                    self.random = '';
+                                    self.state = 'searchPage';
+                                })
+                        }   
                     }
-                    
+
                 },
 
-                beforeCreate: function(){
+                created: function(){
                     var self = this;
 
-                    axios.get('./api/fetch-local.php?type=random&q=15')
+                    axios.get('./api/fetch-local.php?type=random&q='+self.randomCount)
                         .then(function (response){
                             self.random = response.data;
                             self.state = 'landingPage';
