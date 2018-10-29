@@ -42,7 +42,7 @@
                 margin-left: 3px;
             }
 
-            #preloader {
+            #pageloader {
                 position: fixed;
                 top: 50%;
                 left: 50%;
@@ -53,7 +53,6 @@
             .character-card {
                 margin-bottom: 45px;
                 overflow: hidden;
-                text-overflow: ellipsis;
             }
             
             .character-card img {
@@ -67,7 +66,7 @@
             
             @media only screen and (min-width: 601px) {
                 .character-card {
-                    margin-bottom: 60px;
+                    margin-bottom: 65px;
                 }
 
                 .character-card img {
@@ -76,57 +75,59 @@
                 }
                 .character-card span {
                     font-size: 1.3rem;
+                    overflow: hidden;
+                    white-space: nowrap; 
+                    text-overflow: ellipsis !important;
                 }    
             }
         </style>
     </head>
     <body>
-
+        <!-- NAVIGATION -->
         <nav>
             <div class="nav-wrapper">
                 <a href="./" class="brand-logo center">MARVEL<span>TM</span></a>
             </div>
         </nav>
-
+        <!-- NAVIGATION ENDS -->
         <div id="app">
 
-            <div class="preloader-wrapper big active" id="preloader" v-show="state=='loading'">
-                <div class="spinner-layer spinner-red-only">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div><div class="gap-patch">
-                        <div class="circle"></div>
-                    </div><div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                </div>
-            </div>
 
+
+            <!-- PAGELODAER -->
+            <pre-loader id="pageloader" v-show="state=='loading'"></pre-loader>
+            <!-- PAGELOADER ENDS -->
+
+
+
+
+            <!-- LANDING PAGE -->
             <div v-if="state=='landingPage'" v-cloak>
                 <div class="container">
-                    
+                    <div class="row"></div>
                     <div class="row">
-
-                        <div class="col xl4 m6 s12 center character-card" v-for="instance in random" :key="instance.ID">
-                            <img :src="instance.Thumb"><br>
-                            <span v-html="instance.Name" class="grey-text text-darken-3"></span>
-                        </div>
-
+                        <character-card v-for="instance in random" :key="instance.ID" :thumb="instance.Thumb" :name="instance.Name"></character-card>
                     </div>
-
-
-
-
                 </div>
             </div>
+            <!-- LANDING PAGE ENDS -->
 
+
+
+
+            <!-- FOOTER -->
+            <div class="container" v-if="state!='loading'" v-cloak>
+                <div class="row">
+                    <div class="row"></div>
+                    <div class="col s6 offset-s3 divider"></div>
+                    <div class="row"></div>
+                    <div class="col s12 center"><a href="https://parthshah.xyz">parthshah.xyz</a></div>
+                    <div class="col s12 center"><p>Data provided by Marvel.<br>&copy; 2018 <a href="http://marvel.com" target="_BLANK">MARVEL</a></p></div>
+                </div>
+            </div>
+            <!-- FOOTER ENDS -->
 
         </div>
-
-
-
-        
-
         <script src="./js/materialize.min.js"></script>
         <script src="./js/vue.js"></script>
         <script src="./js/axios.min.js"></script>
@@ -134,6 +135,16 @@
         <script src="./js/script.js"></script>
         <!-- <script src="https://use.fontawesome.com/25db837a52.js"></script> -->
         <script>
+
+            Vue.component('character-card', {
+                props: ['thumb', 'name'],
+                template: "<div class='col xl4 m6 s12 center character-card'><img :src='thumb'><br><span v-html='name' class='grey-text text-darken-3'></span></div>",
+            });
+
+            Vue.component('pre-loader', {
+                template: "<div class='preloader-wrapper big active'><div class='spinner-layer spinner-red-only'><div class='circle-clipper left'><div class='circle'></div></div><div class='gap-patch'><div class='circle'></div></div><div class='circle-clipper right'><div class='circle'></div></div></div></div>"
+            });
+
             new Vue({
                 el: '#app',
 
