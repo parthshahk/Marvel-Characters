@@ -50,6 +50,70 @@
         $response = json_decode($get_data, true);
 
         echo json_encode($response['data']['results'][0], JSON_UNESCAPED_SLASHES);
+        exit(0);
+
+    } else if($type == 'comics'){
+
+        $id = $_GET['id'];
+
+        $get_data = callAPI('GET', 'https://gateway.marvel.com:443/v1/public/characters/'.$id.'/comics?ts='.$ts.'&apikey='.$apiKey.'&hash='.$hash.'', false);
+        $response = json_decode($get_data, true);
+
+        $results = array();
+
+        for($i=0; $i<sizeof($response['data']['results']); $i++){
+
+            if( (strpos($response['data']['results'][$i]['thumbnail']['path'], 'not_available') === false) && (strpos($response['data']['results'][$i]['thumbnail']['path'], '4c002e0305708.gif') === false) ){
+
+                $results[] = $response['data']['results'][$i];
+            }
+
+        }
+
+        echo json_encode($results, JSON_UNESCAPED_SLASHES);
+        exit(0);
+
+    } else if($type == 'events'){
+
+        $id = $_GET['id'];
+
+        $get_data = callAPI('GET', 'https://gateway.marvel.com:443/v1/public/characters/'.$id.'/events?ts='.$ts.'&apikey='.$apiKey.'&hash='.$hash.'', false);
+        $response = json_decode($get_data, true);
+
+        $results = array();
+
+        for($i=0; $i<sizeof($response['data']['results']); $i++){
+
+            if( (strpos($response['data']['results'][$i]['thumbnail']['path'], 'not_available') === false) && (strpos($response['data']['results'][$i]['thumbnail']['path'], '4c002e0305708.gif') === false) ){
+
+                $results[] = $response['data']['results'][$i];
+            }
+
+        }
+
+        echo json_encode($results, JSON_UNESCAPED_SLASHES);
+        exit(0);
+
+    } else if($type == 'series'){
+
+        $id = $_GET['id'];
+
+        $get_data = callAPI('GET', 'https://gateway.marvel.com:443/v1/public/characters/'.$id.'/series?ts='.$ts.'&apikey='.$apiKey.'&hash='.$hash.'', false);
+        $response = json_decode($get_data, true);
+
+        $results = array();
+
+        for($i=0; $i<sizeof($response['data']['results']); $i++){
+
+            if( (strpos($response['data']['results'][$i]['thumbnail']['path'], 'not_available') === false) && (strpos($response['data']['results'][$i]['thumbnail']['path'], '4c002e0305708.gif') === false) ){
+
+                $results[] = $response['data']['results'][$i];
+            }
+
+        }
+
+        echo json_encode($results, JSON_UNESCAPED_SLASHES);
+        exit(0);
 
     }
 

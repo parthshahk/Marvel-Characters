@@ -20,7 +20,7 @@
         <!-- <link rel="shortcut icon" href="" type="image/x-icon" />    -->
         <title>Marvel Character Details</title>
         <link rel="stylesheet" href="./css/materialize.min.css">
-        <link rel="stylesheet" href="./css/style.css">
+        <link rel="stylesheet" href="./css/style.css?v=2">
         <link href="https://fonts.googleapis.com/css?family=Anton|Permanent+Marker|K2D:100" rel="stylesheet">
     <body>
         <!-- NAVIGATION -->
@@ -49,11 +49,57 @@
                         <p><b>Description: </b>{{description}}</p>
                     </div>
                 </div>
+
                 <div class="row"></div>
                 <div class="row">
-                    <div class="col s12 m4 center" v-for="instance in charDetails.urls">
-                        <br>
-                        <a :href="instance.url" target="_BLANK" class="btn green darken-2 waves-effect waves-light">{{instance.type}}</a>
+                    <div class="col s12">
+                        <h4 class="light">Comics</h4>
+                    </div>
+                    <div class="col s12 divider"></div>
+                    <div class="row"></div>
+                    <div class="col s12 center">
+                        <pre-loader id="innerLoader" v-if="comics=='notLoaded'"></pre-loader>
+                    </div>
+                    <character-card v-for="instance in comicData" :thumb="instance.thumbnail.path + '.' + instance.thumbnail.extension" :name="instance.title" :key="instance.id"></character-card>
+                </div>
+
+                <div class="row"></div>
+                <div class="row">
+                    <div class="col s12">
+                        <h4 class="light">Events</h4>
+                    </div>
+                    <div class="col s12 divider"></div>
+                    <div class="row"></div>
+                    <div class="col s12 center">
+                        <pre-loader id="innerLoader" v-if="events=='notLoaded'"></pre-loader>
+                    </div>
+                    <character-card v-for="instance in eventsData" :thumb="instance.thumbnail.path + '.' + instance.thumbnail.extension" :name="instance.title" :key="instance.id"></character-card>
+                </div>
+
+                <div class="row"></div>
+                <div class="row">
+                    <div class="col s12">
+                        <h4 class="light">Series</h4>
+                    </div>
+                    <div class="col s12 divider"></div>
+                    <div class="row"></div>
+                    <div class="col s12 center">
+                        <pre-loader id="innerLoader" v-if="series=='notLoaded'"></pre-loader>
+                    </div>
+                    <character-card v-for="instance in seriesData" :thumb="instance.thumbnail.path + '.' + instance.thumbnail.extension" :name="instance.title" :key="instance.id"></character-card>
+                </div>
+
+                <div class="row"></div>
+                <div class="row">
+                    <div class="col s4 center" v-for="instance in charDetails.urls">
+                        <a :href="instance.url" target="_BLANK">{{instance.type}}</a>
+                    </div>
+                </div>
+                <div class="row"></div>
+                
+                <div class="row">
+                    <div class="col s12 center">
+                        <a href="./" class="btn-large green darken-2 waves-effect waves-light">Back</a>
                     </div>
                 </div>
 
@@ -61,8 +107,6 @@
             </div>
             <!-- BODY ENDS -->
 
-
-            
             <!-- FOOTER -->
             <div class="container" v-if="state!='loading'" v-cloak>
                 <div class="row">
@@ -78,6 +122,6 @@
         </div>
         <script src="./js/vue.js"></script>
         <script src="./js/axios.min.js"></script>
-        <script src="./js/character.js"></script>
+        <script src="./js/character.js?v=2"></script>
     </body>
 </html>
