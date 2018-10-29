@@ -95,6 +95,17 @@
             .k2d-font {
                 font-family: 'K2D';
             }
+
+            .alphabets span{
+                margin-left: 12px;
+                font-size: 1.2rem;
+                color: #2196f3;
+                cursor: pointer;
+            }
+
+            .alphabets span:hover {
+                text-decoration: underline;
+            }
         </style>
     </head>
     <body>
@@ -124,6 +135,12 @@
                         </div>
                         <div class="col s12 center">
                             <button class="btn-large green darken-2 waves-effect waves-light k2d-font" @click="searchCharacter">Search</button>
+                        </div>
+                    </div>
+                    <div class="row"></div>
+                    <div class="row">
+                        <div class="col s12 center alphabets">
+                            <span v-for="instance in alphabets" v-html="instance" @click="searchAlpha(instance)"></span>
                         </div>
                     </div>
                     <div class="row"></div>
@@ -168,12 +185,9 @@
             <!-- FOOTER ENDS -->
 
         </div>
-        <script src="./js/materialize.min.js"></script>
         <script src="./js/vue.js"></script>
         <script src="./js/axios.min.js"></script>
-        <script src="./js/hammer.min.js"></script>
         <script src="./js/script.js"></script>
-        <!-- <script src="https://use.fontawesome.com/25db837a52.js"></script> -->
         <script>
 
             Vue.component('character-card', {
@@ -193,13 +207,14 @@
                     random: '',
                     searchData: '',
                     searchQ: '',
-                    randomCount: 20
+                    randomCount: 20,
+                    alphabets: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', '<br>', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
                 },
 
                 methods: {
 
                     searchCharacter: function(){
-                        
+ 
                         this.state = 'loading';
                         var self = this;
 
@@ -220,6 +235,20 @@
                                     self.state = 'searchPage';
                                 })
                         }   
+                    },
+
+
+                    searchAlpha: function(a){
+
+                        this.state = 'loading';
+                        var self = this;
+
+                        axios.get('./api/fetch-local.php?type=alphabet&q='+a)
+                            .then(function(response){
+                                self.searchData = response.data;
+                                self.random = '';
+                                self.state = 'searchPage';
+                            })
                     }
 
                 },
@@ -233,6 +262,8 @@
                             self.state = 'landingPage';
                         })
                 }
+
+
 
 
             });
