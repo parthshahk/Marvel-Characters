@@ -7,11 +7,16 @@
     if($type == 'like'){
 
         $query = $_GET['q'];
+        $rows = array();
+
+        if($query == ''){
+            print json_encode($rows, JSON_UNESCAPED_SLASHES);
+            exit(0);
+        }
         
         $sql = "SELECT * FROM marvelcharacters WHERE Name Like '%$query%'";
         $result = mysqli_query($con, $sql);
         
-        $rows = array();
         while($r = mysqli_fetch_assoc($result)) {
             $rows[] = $r;
         }
