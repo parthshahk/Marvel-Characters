@@ -8,7 +8,9 @@ new Vue ({
     data: {
 
         state: 'loading',
-        id:''
+        id:'',
+        charDetails: '',
+        description: 'N/A'
     },
 
     methods: {
@@ -27,10 +29,12 @@ new Vue ({
 
         axios.get('./api/fetch-marvel.php?id='+this.id+'&type=character')
             .then(function(response){
-
+                self.charDetails = response.data;
+                if(self.charDetails.description != ''){
+                    self.description = self.charDetails.description;
+                }
+                self.state = 'notLoading';
             })
-        
-
     }
 
 

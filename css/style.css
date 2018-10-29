@@ -81,3 +81,7 @@
 .alphabets span:hover {
     text-decoration: underline;
 }
+
+.charDesc {
+    font-size: 1.4rem;
+}
