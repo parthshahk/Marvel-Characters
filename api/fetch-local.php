@@ -39,6 +39,21 @@
 
         exit(0);
 
+    }else if($type == 'alphabet'){
+
+        $alphabet = $_GET['q'];
+
+        $sql = "SELECT * FROM marvelcharacters WHERE Name Like '$alphabet%'";
+        $result = mysqli_query($con, $sql);
+        
+        $rows = array();
+        while($r = mysqli_fetch_assoc($result)) {
+            $rows[] = $r;
+        }
+        print json_encode($rows, JSON_UNESCAPED_SLASHES);
+
+        exit(0);
+
     }
 
 ?>
