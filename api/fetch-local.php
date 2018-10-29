@@ -19,6 +19,10 @@
         
         exit(0);
 
+
+
+
+
     }else if($type == 'random'){
 
         $quantity = $_GET['q'];
@@ -31,12 +35,32 @@
             $rows[] = $r;
         }
 
-        $rows2 = array();
-        for($i=0; $i<$quantity; $i++){
-            $rows2[] = $rows[mt_rand(0,mysqli_num_rows($result))-1];
-        }
-        print json_encode($rows2, JSON_UNESCAPED_SLASHES);
 
+        $i=0;
+        $randomNumbers = array();
+        while($i < $quantity+60){
+
+            $rand = mt_rand(0,mysqli_num_rows($result))-1;
+
+            if(array_search($rand, $randomNumbers) === false){
+                $randomNumbers[] = $rand;
+                $i++;
+            }
+        }
+    
+        $rows2 = array();
+        $j=0;
+        $i=0;
+        while($j < $quantity){
+            
+            if(strpos($rows[$randomNumbers[$i]]['Thumb'], 'not_available') === false ){
+                $rows2[] = $rows[$randomNumbers[$i]];
+                $j++;
+            }
+            $i++;
+        }
+
+        print json_encode($rows2, JSON_UNESCAPED_SLASHES);
         exit(0);
 
     }else if($type == 'alphabet'){

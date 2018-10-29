@@ -11,7 +11,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <!-- <meta name="theme-color" content=""> -->
+        <meta name="theme-color" content="#FFFFFF">
         <!-- <meta name="description" content="" /> -->
         <!-- <meta property="og:title" content="" /> -->
         <!-- <meta property="og:description" content="" /> -->
@@ -21,23 +21,131 @@
         <title>Explore Marvel Characters</title>
         <link rel="stylesheet" href="./css/materialize.min.css">
         <link rel="stylesheet" href="./css/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
         <style>
-        
+            [v-cloak] {
+                display: none;
+            }
+
+            .nav-wrapper {
+                background-color: #ED1D24;
+            }
+
+            .brand-logo {
+                font-family: 'Anton';
+                font-size: 2.6rem !important;
+            }
+
+            #preloader {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                margin-left: -32px;
+                margin-top: -32px;
+            }
+
+            .character-card {
+                margin-bottom: 40px;
+            }
+            
+            .character-card img {
+                width: 100%;
+            }
+
+            .character-card span {
+                font-size: 1.3rem;
+            }
+            
+            @media only screen and (min-width: 601px) {
+                .character-card {
+                    margin-bottom: 60px;
+                }
+
+                .character-card img {
+                    height: 250px;
+                    width: auto;
+                }    
+            }
         </style>
     </head>
     <body>
+
+        <nav>
+            <div class="nav-wrapper">
+                <a href="./" class="brand-logo center">MARVEL</a>
+            </div>
+        </nav>
+
+        <div id="app">
+
+            <div class="preloader-wrapper big active" id="preloader" v-show="state=='loading'">
+                <div class="spinner-layer spinner-red-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div v-if="state=='frontPage'" v-cloak>
+                <div class="container">
+                    
+                    <div class="row">
+
+                        <div class="col xl4 m6 s12 center character-card" v-for="instance in random" :key="instance.ID">
+                            <img :src="instance.Thumb"><br>
+                            <span v-html="instance.Name"></span>
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+            </div>
+
+
+        </div>
 
 
 
         
 
         <script src="./js/materialize.min.js"></script>
-        <script src="./js/vue.min.js"></script>
+        <script src="./js/vue.js"></script>
         <script src="./js/axios.min.js"></script>
         <script src="./js/hammer.min.js"></script>
         <script src="./js/script.js"></script>
         <script>
-        
+            new Vue({
+                el: '#app',
+
+                data: {
+                    state: 'loading',
+                    random: ''
+                },
+
+                methods: {
+
+                    
+                },
+
+                beforeCreate: function(){
+                    var self = this;
+
+                    axios.get('./api/fetch-local.php?type=random&q=15')
+                        .then(function (response){
+                            self.random = response.data;
+                            self.state = 'frontPage';
+                        })
+                }
+
+
+            });
         </script>
     </body>
 </html>
