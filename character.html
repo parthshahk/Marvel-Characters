@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-101233231-2"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-101233231-2');
+        </script>  -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="theme-color" content="#ED1D24">
+        <!-- <meta name="description" content="" /> -->
+        <!-- <meta property="og:title" content="" /> -->
+        <!-- <meta property="og:description" content="" /> -->
+        <!-- <meta property="og:image" content="" /> -->
+        <!-- <meta property="og:url" content="" /> -->
+        <!-- <link rel="shortcut icon" href="" type="image/x-icon" />    -->
+        <title>Marvel Character Details</title>
+        <link rel="stylesheet" href="./css/materialize.min.css">
+        <link rel="stylesheet" href="./css/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Anton|Permanent+Marker|K2D:100" rel="stylesheet">
+    <body>
+        <!-- NAVIGATION -->
+        <nav>
+            <div class="nav-wrapper">
+                <a href="./" class="brand-logo center">MARVEL<span>TM</span></a>
+            </div>
+        </nav>
+        <!-- NAVIGATION ENDS -->
+        <div id="character">
+
+            <!-- PAGELODAER -->
+            <pre-loader id="pageloader" v-show="state=='loading'"></pre-loader>
+            <!-- PAGELOADER ENDS -->
+
+
+
+            
+            <!-- FOOTER -->
+            <div class="container" v-if="state!='loading'" v-cloak>
+                <div class="row">
+                    <div class="row"></div>
+                    <div class="col s6 offset-s3 divider"></div>
+                    <div class="row"></div>
+                    <div class="col s12 center"><a href="https://parthshah.xyz">parthshah.xyz</a></div>
+                    <div class="col s12 center"><p>Data provided by Marvel.<br>&copy; 2018 <a href="http://marvel.com" target="_BLANK">MARVEL</a></p></div>
+                </div>
+            </div>
+            <!-- FOOTER ENDS -->
+
+        </div>
+        <script src="./js/vue.js"></script>
+        <script src="./js/axios.min.js"></script>
+        <script src="./js/character.js"></script>
+    </body>
+</html>

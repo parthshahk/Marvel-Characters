@@ -1,0 +1,83 @@
+[v-cloak] {
+    display: none;
+}
+
+.nav-wrapper {
+    background-color: #ED1D24;
+}
+
+.brand-logo {
+    font-family: 'Anton';
+    font-size: 2.6rem !important;
+}
+
+.brand-logo span{
+    font-family: 'Anton';
+    font-size: 0.4rem;
+    margin-left: 3px;
+}
+
+#pageloader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -32px;
+    margin-top: -32px;
+}
+
+.character-card {
+    margin-bottom: 45px;
+    overflow: hidden;
+}
+
+.character-card img {
+    width: 100%;
+}
+
+.character-card span {
+    font-size: 1.5rem;
+    font-family: 'Permanent Marker';
+}
+
+@media only screen and (min-width: 601px) {
+    .character-card {
+        margin-bottom: 65px;
+    }
+
+    .character-card img {
+        height: 250px;
+        width: auto;
+    }
+    .character-card span {
+        font-size: 1.3rem;
+        overflow: hidden;
+        white-space: nowrap; 
+        text-overflow: ellipsis !important;
+    }    
+}
+
+#search {
+    font-family: 'Permanent Marker';
+    font-size: 1.4rem;
+    color: #424242;
+}
+
+#search:focus {
+    border-bottom: 1px solid #ED1D24;
+    box-shadow: 0 1px 0 0 #ED1D24;
+}
+
+.k2d-font {
+    font-family: 'K2D';
+}
+
+.alphabets span{
+    margin-left: 12px;
+    font-size: 1.2rem;
+    color: #2196f3;
+    cursor: pointer;
+}
+
+.alphabets span:hover {
+    text-decoration: underline;
+}
